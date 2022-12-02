@@ -1,10 +1,10 @@
-const {SerialPort} = require("serialport");
-const {ReadlineParser} = require('@serialport/parser-readline')
+const {SerialPort, ByteLengthParser} = require("serialport");
 const {SerialPortMock} = require("serialport");
 
 //hc12 module config
 const hc12 = {
-    interface: '/dev/serial0', baudRate: 9600,
+    interface: '/dev/serial0',
+    baudRate: 9600
 };
 
 port = new SerialPort({
@@ -13,8 +13,8 @@ port = new SerialPort({
 
 globals = {SerialPort, SerialPortMock, port};
 
-const parser = port.pipe(new ReadlineParser({
-    delimiter: '\n'
+const parser = port.pipe(new ByteLengthParser({
+    length: 32
 }));
 
 port.open(err => {
