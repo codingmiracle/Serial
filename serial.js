@@ -1,4 +1,4 @@
-const {SerialPort, ByteLengthParser} = require("serialport");
+const {SerialPort, ByteLengthParser, InterByteTimeoutParser} = require("serialport");
 const {SerialPortMock} = require("serialport");
 
 //hc12 module config
@@ -13,8 +13,8 @@ port = new SerialPort({
 
 globals = {SerialPort, SerialPortMock, port};
 
-const parser = port.pipe(new ByteLengthParser({
-    length: 32
+const parser = port.pipe(new InterByteTimeoutParser({
+    interval: 10
 }));
 
 port.open(err => {
