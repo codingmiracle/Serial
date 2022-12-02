@@ -1,4 +1,4 @@
-const SerialPort = require("serialport");
+import * as SerialPort from "serialport";
 const Readline = require("readline");
 
 const hc12 = {
@@ -6,7 +6,7 @@ const hc12 = {
     baudRate: 9600,
 }
 
-serialPort = new SerialPort(hc12.interface, {
+let serialPort = new SerialPort(hc12.interface, {
     baudRate: hc12.baudRate
 });
 
