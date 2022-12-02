@@ -22,7 +22,7 @@ port.open(err => {
 });
 
 parser.on('data', data => {
-    console.log(data);
+    console.log(data.toString());
 });
 
 tx_task = setInterval(() => {
