@@ -14,7 +14,7 @@ port = new SerialPort({
 globals = {SerialPort, SerialPortMock, port};
 
 const parser = port.pipe(new InterByteTimeoutParser({
-    interval: 10
+    interval: 1
 }));
 
 port.open(err => {
