@@ -20,10 +20,12 @@ const parser = port.pipe(new ReadlineParser({
     delimiter: '\n'
 }));
 
-port.open();
+port.open(err => console.log(err));
 
-parser.on('data', (data) => {
-    console.log(data.toString());
-});
+tx_task = setInterval(() => {
+    port.write('Hello World', err => console.log(err));
+}, 2000);
 
-port.write('Hello World');
+rx_task = setInterval(() => {
+    console.log("rx: " + port.read().toString())
+}, 2000);
