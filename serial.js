@@ -27,5 +27,5 @@ tx_task = setInterval(() => {
 }, 2000);
 
 rx_task = setInterval(() => {
-    console.log("rx: " + port.read().toString())
+    console.log("rx: ", port.read())
 }, 2000);
