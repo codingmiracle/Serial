@@ -1,4 +1,4 @@
-import * as SerialPort from "serialport";
+const {SerialPort} = require("serialport");
 const Readline = require("readline");
 
 const hc12 = {
