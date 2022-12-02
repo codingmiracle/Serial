@@ -15,6 +15,6 @@ const parser = serialPort.pipe(new Readline({
 }))
 
 parser.on('data', (data) => {
-    token = data.split(" ");
-    console.log(data, typeof data);
+    console.log(data);
 })
+
