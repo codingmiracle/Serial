@@ -1,4 +1,4 @@
-const {SerialPort} = require("serialport");
+const SerialPort = require("serialport");
 const Readline = require("readline");
 
 const hc12 = {
