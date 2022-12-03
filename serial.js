@@ -10,8 +10,9 @@ const hc12 = {
 };
 
 const plainKey = 'PHilheaLthDuMmyciPHerKeyS';
-const hashKey = sha256('sha256');
-hashKey.update(plainKey);
+const hashKey = sha256(plainKey);
+//hashKey.update(plainKey);
+console.log(hashKey, hashKey.digest());
 const aes_context = {
     algorithm: 'aes-256-cbc',
     key: hashKey.digest('hex'),
