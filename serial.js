@@ -25,6 +25,7 @@ const parser = port.pipe(new InterByteTimeoutParser({
     interval: 10
 }));
 
+console.log(crypto.createDecipheriv)
 const decipher = crypto.createDecipheriv('aes-256-cbc', aes_context.key, aes_context.iv);
 
 globals = {SerialPort, SerialPortMock, port};
