@@ -37,7 +37,7 @@ init = () => {
 
     parser.on('data', data => {
         plaintext = Buffer.from(data, 3).toString();
-        console.log(data, plaintext);
+        console.log(Buffer.from(data, 3), plaintext);
     });
 }
 
