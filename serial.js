@@ -12,7 +12,7 @@ const hc12 = {
 const plainKey = 'PHilheaLthDuMmyciPHerKeyS';
 const aes_context = {
     algorithm: 'aes-256-cbc',
-    key: sha256(plainKey),
+    key: sha256(plainKey).toString(),
     iv: 0
 }
 console.log(aes_context);
@@ -42,7 +42,7 @@ init = () => {
         console.log(decrypted);
     });
 
-    let tx_task = setInterval(() => {
+    tx_task = setInterval(() => {
         port.write(aes_context.key, err => {
             if (err != null) console.log("tx: ", err);
         });
