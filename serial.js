@@ -28,8 +28,6 @@ const parser = port.pipe(new PacketLengthParser({
     maxLen: 1024
 }));
 
-const decipher = crypto.createDecipheriv('aes-256-cbc', aes_context.key, aes_context.iv);
-
 globals = {SerialPort, SerialPortMock, port};
 
 init = () => {
