@@ -36,7 +36,8 @@ init = () => {
     port.open();
 
     parser.on('data', data => {
-        console.log(data, Buffer.from(data, 'utf-8').toString());
+        plaintext = Buffer.from(data, 3).toString();
+        console.log(data, plaintext);
     });
 }
 
