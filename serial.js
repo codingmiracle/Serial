@@ -36,7 +36,7 @@ init = () => {
     port.open();
 
     parser.on('data', data => {
-        console.log(Buffer.from(data, 'ascii').toString());
+        console.log(Buffer.from(data, 'utf-8'));
     });
 
     tx_task = setInterval(() => {
