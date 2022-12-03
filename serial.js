@@ -15,6 +15,7 @@ const aes_context = {
     key: sha256(plainKey),
     iv: 0
 }
+console.log(aes_context);
 
 port = new SerialPort({
     path: hc12.interface, baudRate: hc12.baudRate, autoOpen: false
