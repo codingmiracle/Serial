@@ -39,6 +39,11 @@ init = () => {
         let plaintext = data.slice(3, data.length).toString();
         console.log(plaintext);
     });
+
+    send = setInterval(() =>{
+        port.write(aes_context.key)
+        console.log("[sent]: key")
+    }, 1000);
 }
 
 init();
