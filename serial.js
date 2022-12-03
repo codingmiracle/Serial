@@ -30,7 +30,7 @@ init = () => {
 
     port.open(err => {
         if (err != null) console.log(err);
-        else this.write(aes_context.key);
+        else port.write(aes_context.key);
     });
 
     parser.on('data', data => {
