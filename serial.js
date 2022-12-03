@@ -10,7 +10,7 @@ const hc12 = {
 
 const aes_context = {
     algorithm: 'aes-256-cbc',
-    key: crypto.randomBytes(256).toString(),
+    key: crypto.randomFill(256).toString(),
     iv: "000000000000000\0"
 }
 console.log(aes_context);
