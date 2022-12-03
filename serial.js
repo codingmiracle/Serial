@@ -25,10 +25,7 @@ globals = {SerialPort, SerialPortMock, port};
 init = () => {
     port.on('error', console.log);
 
-    port.open(err => {
-        if (err != null) console.log(err);
-        else port.write(aes_context.key);
-    });
+    port.open();
 
     parser.on('data', data => {
         console.log(data);
