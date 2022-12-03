@@ -1,7 +1,7 @@
 const {SerialPort, PacketLengthParser} = require("serialport");
 const {SerialPortMock} = require("serialport");
 const {crypto} = require("crypto");
-const {sha256} = require("create-js")
+const sha256 = require("crypto-js/sha256")
 
 //hc12 module config
 const hc12 = {
