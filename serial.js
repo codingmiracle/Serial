@@ -1,7 +1,5 @@
-const {SerialPort, InterByteTimeoutParser} = require("serialport");
+const {SerialPort, PacketLengthParser} = require("serialport");
 const {SerialPortMock} = require("serialport");
-const crypto = require("crypto")
-const sha256 = require("crypto-js/sha256")
 
 //hc12 module config
 const hc12 = {
@@ -9,27 +7,23 @@ const hc12 = {
     baudRate: 9600
 };
 
-const plainKey = 'PHilheaLthDuMmyciPHerKeyS';
-const aes_context = {
-    algorithm: 'aes-256-cbc',
-    key: sha256(plainKey).toString(),
-    iv: "000000000000000\0"
-}
-console.log(aes_context);
-
 port = new SerialPort({
     path: hc12.interface, baudRate: hc12.baudRate, autoOpen: false
 });
 
-const parser = port.pipe(new InterByteTimeoutParser({
-    interval: 10
+const parser = port.pipe(new PacketLengthParser({
+    delimiter: 0xaa,
+    packetOverhead: 3,
+    lengthBytes: 2,
+    lengthOffset: 1,
+    maxLen: 1024
 }));
 
-const decipher = crypto.createDecipheriv(aes_context.algorithm, aes_context.password, aes_context.iv);
 
 globals = {SerialPort, SerialPortMock, port};
 
 init = () => {
+    port.on('error', console.log);
 
     port.open(err => {
         if (err != null) console.log(err);
@@ -37,17 +31,11 @@ init = () => {
     });
 
     parser.on('data', data => {
-        console.log(data)
-        decipher.setAutoPadding(false);
-        let decrypted = decipher.update(data.toString(), 'hex', 'utf-8');
-        decrypted += decipher.final('utf-8');
-        console.log(decrypted);
+        console.log(data);
     });
 
     tx_task = setInterval(() => {
-        port.write(aes_context.key, err => {
-            if (err != null) console.log("tx: ", err);
-        });
+        port.write("Hello World!");
     }, 2000);
 }
 
