@@ -13,7 +13,7 @@ const plainKey = 'PHilheaLthDuMmyciPHerKeyS';
 const aes_context = {
     algorithm: 'aes-256-cbc',
     key: sha256(plainKey).toString(),
-    iv: 0
+    iv: "000000000000000\0"
 }
 console.log(aes_context);
 
