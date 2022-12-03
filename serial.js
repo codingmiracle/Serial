@@ -1,6 +1,6 @@
 const {SerialPort, InterByteTimeoutParser} = require("serialport");
 const {SerialPortMock} = require("serialport");
-const {crypto} = require("crypto");
+const crypto = require("crypto")
 const sha256 = require("crypto-js/sha256")
 
 //hc12 module config
@@ -25,8 +25,7 @@ const parser = port.pipe(new InterByteTimeoutParser({
     interval: 10
 }));
 
-console.log(crypto.createDecipheriv)
-const decipher = crypto.createDecipheriv('aes-256-cbc', aes_context.key, aes_context.iv);
+const decipher = crypto.createDecipheriv(aes_context.algorithm, aes_context.password, aes_context.iv);
 
 globals = {SerialPort, SerialPortMock, port};
 
