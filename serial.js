@@ -35,7 +35,7 @@ init = () => {
     });
 
     parser.on('data', data => {
-        const decipher = crypto.createDecipheriv('aes-256-cbc', aes_context.key, aes_context.iv);
+        const decipher = crypto.createDecipher('aes-256-cbc', aes_context.key);
         decipher.setAutoPadding(false);
         let decrypted = decipher.update(data.toString(), 'hex', 'utf-8');
         decrypted += decipher.final('utf-8');
