@@ -1,6 +1,7 @@
 const {SerialPort, PacketLengthParser} = require("serialport");
 const {SerialPortMock} = require("serialport");
 const {crypto} = require("crypto");
+const {sha256} = require("create-js")
 
 //hc12 module config
 const hc12 = {
@@ -10,7 +11,7 @@ const hc12 = {
 
 const aes_context = {
     algorithm: 'aes-256-cbc',
-    key: crypto.randomFill(256).toString(),
+    key: sha256("a").toString(),
     iv: "000000000000000\0"
 }
 console.log(aes_context);
