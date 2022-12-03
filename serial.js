@@ -1,6 +1,7 @@
 const {SerialPort, InterByteTimeoutParser} = require("serialport");
 const {SerialPortMock} = require("serialport");
 const {crypto} = require("crypto");
+const sha256 = require("crypto-js/sha256")
 
 //hc12 module config
 const hc12 = {
@@ -9,11 +10,11 @@ const hc12 = {
 };
 
 const plainKey = 'PHilheaLthDuMmyciPHerKeyS';
-const hashKey = crypto.createHash('sha256');
+const hashKey = sha256('sha256');
 hashKey.update(plainKey);
 const aes_context = {
     algorithm: 'aes-256-cbc',
-    key: hashKey.digest(),
+    key: hashKey.digest('hex'),
     iv: 0
 }
 
