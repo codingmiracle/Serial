@@ -21,11 +21,13 @@ port = new SerialPort({
     path: hc12.interface, baudRate: hc12.baudRate, autoOpen: false
 });
 
-globals = {SerialPort, SerialPortMock, port};
-
 const parser = port.pipe(new InterByteTimeoutParser({
     interval: 10
 }));
+
+const decipher = crypto.createDecipheriv('aes-256-cbc', aes_context.key, aes_context.iv);
+
+globals = {SerialPort, SerialPortMock, port};
 
 init = () => {
 
@@ -36,7 +38,6 @@ init = () => {
 
     parser.on('data', data => {
         console.log(data)
-        const decipher = crypto.createDecipheriv('aes-256-cbc', aes_context.key, 0);
         decipher.setAutoPadding(false);
         let decrypted = decipher.update(data.toString(), 'hex', 'utf-8');
         decrypted += decipher.final('utf-8');
