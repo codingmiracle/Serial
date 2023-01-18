@@ -2,9 +2,6 @@ const {SerialPort, PacketLengthParser} = require("serialport");
 const SerialPortMock = require("serialport");
 const crypto = require("crypto");
 
-const token = "aaaaa";
-let sessionKeyLoaded = false;
-let session_iv = "";
 
 //hc12 module config
 const hc12 = {
@@ -12,10 +9,15 @@ const hc12 = {
     baudRate: 9600
 };
 
+const token = "aaaaa";
+const original_iv = [0x00, 0x00, 0x00, 0x00, 
+                    0x00, 0x00, 0x00, 0x00,
+                    0x00, 0x00, 0x00, 0x00,
+                    0x00, 0x00, 0x00, 0x00]
 const aes_ctx = {
     algorithm: 'aes-256-cbc',
     key: crypto.createHash('sha256').update(token).digest(),
-    iv: "0000000000000000"
+    iv: Buffer.from(original_iv)
 };
 console.log(aes_ctx);
 
@@ -49,12 +51,15 @@ init = () => {
             console.log(encryptedMessage);
             session_iv = encryptedMessage;
         }*/
-        let decipher = crypto.createDecipheriv('aes-256-cbc', aes_ctx.key, aes_ctx.iv);
+        let decipher = crypto.createDecipheriv(aes_ctx.algorithm, aes_ctx.key, aes_ctx.iv);
         decipher.setAutoPadding(false);
         let decryptedMessage = decipher.update(plaintext, 'hex', 'hex');
         decryptedMessage.concat(decipher.final('hex'));
         console.log(decryptedMessage);
     });
 }
+
+//47 66 74 53 67 51 51 64  59 4c 46 44 48 6c 47 00
+//77 56 44 63 57 61 61 54  69 7c 76 74 78 5c 77 30
 
 init();
