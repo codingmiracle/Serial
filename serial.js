@@ -2,7 +2,7 @@ const {SerialPort, PacketLengthParser} = require("serialport");
 const SerialPortMock = require("serialport");
 const crypto = require("crypto");
 
-const token = "";
+const token = "aaaaa";
 let sessionKeyLoaded = false;
 let session_iv = "";
 
