@@ -14,5 +14,8 @@
   "devDependencies": {
     "crypto-js": "^4.1.1",
     "serialport": "^10.5.0"
+  },
+  "dependencies": {
+    "mysql": "^2.18.1"
   }
 }

@@ -3,6 +3,7 @@ const {SerialPortMock} = require("serialport");
 const {crypto} = require("crypto");
 const sha256 = require("crypto-js/sha256")
 
+
 //hc12 module config
 const hc12 = {
     interface: '/dev/serial0',
@@ -11,7 +12,7 @@ const hc12 = {
 
 const aes_context = {
     algorithm: 'aes-256-cbc',
-    key: sha256("a").toString(),
+    key: null,
     iv: "000000000000000\0"
 }
 console.log(aes_context);
@@ -37,13 +38,20 @@ init = () => {
 
     parser.on('data', data => {
         let plaintext = data.slice(3, data.length).toString();
-        console.log(plaintext);
+        if(aes_context.key == null) {
+            aes_context.key = plaintext;
+            console.log(aes_context.key);
+            var cipher = crypto.createCipher('aes-256-cbc', aes_context.key);
+            var decipher = crypto.createDecipher('aes-256-cbc', aes_context.key)
+            let encryptedMessage = cipher.update("ACK", 'utf8', 'hex');
+            encryptedMessage += cipher.final('hex');
+            console.log(encryptedMessage);
+            port.write(encryptedMessage);
+        }
+        let decryptedMessage = decipher.update(plaintext, 'hex', 'utf8');
+        decryptedMessage += decipher.final('utf8');
+        console.log(decryptedMessage);
     });
-
-    send = setInterval(() =>{
-        port.write(aes_context.key)
-        console.log("[sent]: key")
-    }, 1000);
 }
 
 init();
