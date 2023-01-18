@@ -50,9 +50,8 @@ init = () => {
             console.log(encryptedMessage);
             session_iv = encryptedMessage;
         }*/
-        let decryptedMessage = decipher.update(plaintext, 'hex', 'utf8');
-        console.log(decryptedMessage);
-        decryptedMessage += decipher.final('utf8');
+        let decryptedMessage = decipher.update(plaintext, 'hex', 'hex');
+        decryptedMessage += decipher.final('hex');
         console.log(decryptedMessage);
     });
 }
