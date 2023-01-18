@@ -12,12 +12,12 @@ const hc12 = {
     baudRate: 9600
 };
 
-const aes_context = {
+const aes_ctx = {
     algorithm: 'aes-256-cbc',
     key: crypto.createHash('sha256').update(token).digest('hex'),
     iv: "000000000000000\0"
 };
-console.log(aes_context);
+console.log(aes_ctx);
 
 port = new SerialPort({
     path: hc12.interface, baudRate: hc12.baudRate, autoOpen: false
@@ -34,7 +34,7 @@ const parser = port.pipe(new PacketLengthParser({
 globals = {SerialPort, SerialPortMock, port};
 
 init = () => {
-    let decipher = crypto.createDecipher('aes-256-cbc', aes_context.key);
+    let decipher = crypto.createDecipheriv('aes-256-cbc', aes_ctx.key, aes_ctx.iv);
 
     port.on('error', console.log);
 
