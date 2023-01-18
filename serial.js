@@ -35,6 +35,7 @@ globals = {SerialPort, SerialPortMock, port};
 
 init = () => {
     let decipher = crypto.createDecipheriv('aes-256-cbc', aes_ctx.key, aes_ctx.iv);
+    decipher.setAutoPadding(false);
 
     port.on('error', console.log);
 
@@ -50,7 +51,7 @@ init = () => {
             console.log(encryptedMessage);
             session_iv = encryptedMessage;
         }*/
-        decipher.setAutoPadding(false);
+
         let decryptedMessage = decipher.update(plaintext, 'hex', 'hex');
         decryptedMessage.concat(decipher.final('hex'));
         console.log(decryptedMessage);
