@@ -15,7 +15,7 @@ const hc12 = {
 const aes_ctx = {
     algorithm: 'aes-256-cbc',
     key: crypto.createHash('sha256').update(token).digest(),
-    iv: "000000000000000\0"
+    iv: "0000000000000000"
 };
 console.log(aes_ctx);
 
