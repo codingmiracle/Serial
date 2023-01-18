@@ -50,6 +50,7 @@ init = () => {
             console.log(encryptedMessage);
             session_iv = encryptedMessage;
         }*/
+        decipher.setAutoPadding(false);
         let decryptedMessage = decipher.update(plaintext, 'hex', 'hex');
         decryptedMessage.concat(decipher.final('hex'));
         console.log(decryptedMessage);
