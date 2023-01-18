@@ -3,6 +3,9 @@ const {SerialPortMock} = require("serialport");
 const {crypto} = require("crypto");
 const sha256 = require("crypto-js/sha256")
 
+const token = "";
+let sessionKeyLoaded = false;
+let session_iv = "";
 
 //hc12 module config
 const hc12 = {
@@ -12,9 +15,9 @@ const hc12 = {
 
 const aes_context = {
     algorithm: 'aes-256-cbc',
-    key: null,
+    key: crypto.createHash('sha256').update(token).digest('hex'),
     iv: "000000000000000\0"
-}
+};
 console.log(aes_context);
 
 port = new SerialPort({
@@ -32,21 +35,21 @@ const parser = port.pipe(new PacketLengthParser({
 globals = {SerialPort, SerialPortMock, port};
 
 init = () => {
+    let decipher = crypto.createDecipher('aes-256-cbc', aes_context.key);
+
     port.on('error', console.log);
 
     port.open();
 
     parser.on('data', data => {
         let plaintext = data.slice(3, data.length).toString();
-        if(aes_context.key == null) {
+        console.log(plaintext);
+        if(!sessionKeyLoaded) {
             aes_context.key = plaintext;
-            console.log(aes_context.key);
-            var cipher = crypto.createCipher('aes-256-cbc', aes_context.key);
-            var decipher = crypto.createDecipher('aes-256-cbc', aes_context.key)
-            let encryptedMessage = cipher.update("ACK", 'utf8', 'hex');
-            encryptedMessage += cipher.final('hex');
+            let encryptedMessage = decipher.update(plaintext, 'ascii', 'hex');
+            encryptedMessage += decipher.final('hex');
             console.log(encryptedMessage);
-            port.write(encryptedMessage);
+            session_iv = encryptedMessage;
         }
         let decryptedMessage = decipher.update(plaintext, 'hex', 'utf8');
         decryptedMessage += decipher.final('utf8');
