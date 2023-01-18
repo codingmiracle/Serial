@@ -41,15 +41,15 @@ init = () => {
     port.open();
 
     parser.on('data', data => {
-        let plaintext = data.slice(3, data.length).toString();
+        let plaintext = data.slice(3, data.length).toString('hex');
         console.log(plaintext);
-        if(!sessionKeyLoaded) {
+        /*if(!sessionKeyLoaded) {
             aes_context.key = plaintext;
             let encryptedMessage = decipher.update(plaintext, 'ascii', 'hex');
             encryptedMessage += decipher.final('hex');
             console.log(encryptedMessage);
             session_iv = encryptedMessage;
-        }
+        }*/
         let decryptedMessage = decipher.update(plaintext, 'hex', 'utf8');
         decryptedMessage += decipher.final('utf8');
         console.log(decryptedMessage);
