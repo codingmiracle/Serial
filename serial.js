@@ -51,7 +51,7 @@ init = () => {
             session_iv = encryptedMessage;
         }*/
         let decryptedMessage = decipher.update(plaintext, 'hex', 'hex');
-        decryptedMessage += decipher.final('hex');
+        decryptedMessage.concat(decipher.final('hex'));
         console.log(decryptedMessage);
     });
 }
