@@ -34,7 +34,7 @@ const parser = port.pipe(new PacketLengthParser({
 globals = {SerialPort, SerialPortMock, port};
 
 init = () => {
-    let decipher = crypto.createDecipheriv('aes-256-cbc', aes_ctx.key, aes_ctx.iv);
+    let decipher = crypto.createDecipher('aes-256-cbc', aes_ctx.key);
 
     port.on('error', console.log);
 
