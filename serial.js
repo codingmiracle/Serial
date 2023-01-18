@@ -14,7 +14,7 @@ const hc12 = {
 
 const aes_ctx = {
     algorithm: 'aes-256-cbc',
-    key: crypto.createHash('sha256').update(token).digest('hex'),
+    key: crypto.createHash('sha256').update(token).digest(),
     iv: "000000000000000\0"
 };
 console.log(aes_ctx);
@@ -34,7 +34,7 @@ const parser = port.pipe(new PacketLengthParser({
 globals = {SerialPort, SerialPortMock, port};
 
 init = () => {
-    let decipher = crypto.createDecipher('aes-256-cbc', aes_ctx.key);
+    let decipher = crypto.createDecipheriv('aes-256-cbc', aes_ctx.key, aes_ctx.iv);
 
     port.on('error', console.log);
 
