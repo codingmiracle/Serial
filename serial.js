@@ -1,7 +1,6 @@
 const {SerialPort, PacketLengthParser} = require("serialport");
-const {SerialPortMock} = require("serialport");
-const {crypto} = require("crypto");
-const sha256 = require("crypto-js/sha256")
+const SerialPortMock = require("serialport");
+const crypto = require("crypto");
 
 const token = "";
 let sessionKeyLoaded = false;
